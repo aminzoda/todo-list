@@ -14,18 +14,19 @@ export const Todo = ({ task, toggleComplete, deleteTodo, editTodo }) => {
       <div>
         <FontAwesomeIcon icon={faPenToSquare} onClick={() => editTodo(task.id)} />
         <FontAwesomeIcon icon={faTrash} onClick={() => deleteTodo(task.id)} />
-      </div>
-    </div>
+      </div> 
+    </div>  
   );
 };
 
+// Define propTypes for the component
 Todo.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.string.isRequired,     
+    id: PropTypes.string.isRequired,
     task: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
   }).isRequired,
   toggleComplete: PropTypes.func.isRequired,
-  deleteTodo: PropTypes.func.isRequired,    // Add deleteTodo validation here
-  editTodo: PropTypes.func.isRequired,      // Add editTodo validation here
+  deleteTodo: PropTypes.func.isRequired,
+  editTodo: PropTypes.func.isRequired,
 };
