@@ -2,13 +2,18 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export const Todo = ({ task }) => {
+export const Todo = ({ task, toggleComplete, deleteTodo, editTodo }) => {
   return (
     <div className="Todo">
-      <p>{task.task}</p>
+      <p
+        onClick={() => toggleComplete(task.id)}
+        className={`${task.completed ? "completed" : ""}`}
+      >
+        {task.task}
+      </p>
       <div>
-        <FontAwesomeIcon icon={faPenToSquare} />
-        <FontAwesomeIcon icon={faTrash} />
+        <FontAwesomeIcon icon={faPenToSquare} onClick={() => editTodo(task.id)} />
+        <FontAwesomeIcon icon={faTrash} onClick={() => deleteTodo(task.id)} />
       </div>
     </div>
   );
@@ -16,6 +21,11 @@ export const Todo = ({ task }) => {
 
 Todo.propTypes = {
   task: PropTypes.shape({
-    task: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,     
+    task: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
   }).isRequired,
+  toggleComplete: PropTypes.func.isRequired,
+  deleteTodo: PropTypes.func.isRequired,    // Add deleteTodo validation here
+  editTodo: PropTypes.func.isRequired,      // Add editTodo validation here
 };
