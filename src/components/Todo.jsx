@@ -2,26 +2,34 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export const Todo = ({ task, toggleComplete, deleteTodo, editTodo }) => {
+export const Todo = ({ todo, toggleComplete, deleteTodo, editTodo }) => {
   return (
     <div className="Todo">
       <p
-        onClick={() => toggleComplete(task.id)}
-        className={`${task.completed ? "completed" : ""}`}
+        onClick={toggleComplete}
+        className={todo.completed ? "completed" : ""}
       >
-        {task.task}
+        {todo.task}
       </p>
       <div>
-        <FontAwesomeIcon icon={faPenToSquare} onClick={() => editTodo(task.id)} />
-        <FontAwesomeIcon icon={faTrash} onClick={() => deleteTodo(task.id)} />
-      </div> 
-    </div>  
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+          onClick={editTodo} // Trigger prompt on click
+          style={{ cursor: "pointer", marginRight: "10px" }}
+        />
+        <FontAwesomeIcon
+          icon={faTrash}
+          onClick={deleteTodo} // Delete todo on click
+          style={{ cursor: "pointer" }}
+        />
+      </div>
+    </div>
   );
 };
 
-// Define propTypes for the component
+// Define propTypes for the Todo component
 Todo.propTypes = {
-  task: PropTypes.shape({
+  todo: PropTypes.shape({
     id: PropTypes.string.isRequired,
     task: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
