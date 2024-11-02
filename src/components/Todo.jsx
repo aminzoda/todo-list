@@ -5,21 +5,18 @@ import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
 export const Todo = ({ todo, toggleComplete, deleteTodo, editTodo }) => {
   return (
     <div className="Todo">
-      <p
-        onClick={toggleComplete}
-        className={todo.completed ? "completed" : ""}
-      >
+      <p onClick={toggleComplete} className={todo.completed ? "completed" : ""}>
         {todo.task}
       </p>
       <div>
         <FontAwesomeIcon
           icon={faPenToSquare}
-          onClick={editTodo} // Trigger prompt on click
+          onClick={() => editTodo(todo.id, todo.task)}
           style={{ cursor: "pointer", marginRight: "10px" }}
         />
         <FontAwesomeIcon
           icon={faTrash}
-          onClick={deleteTodo} // Delete todo on click
+          onClick={deleteTodo}
           style={{ cursor: "pointer" }}
         />
       </div>
@@ -27,7 +24,6 @@ export const Todo = ({ todo, toggleComplete, deleteTodo, editTodo }) => {
   );
 };
 
-// Define propTypes for the Todo component
 Todo.propTypes = {
   todo: PropTypes.shape({
     id: PropTypes.string.isRequired,

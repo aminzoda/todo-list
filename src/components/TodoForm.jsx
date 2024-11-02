@@ -1,28 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-export const TodoForm = ({ addTodo }) => {
-  const [value, setValue] = useState("");
+export const TodoForm = ({ addTodo, isEditing, currentTask }) => {
+  const [input, setInput] = useState("");
+
+  useEffect(() => {
+    if (isEditing) {
+      setInput(currentTask);
+    } else {
+      setInput("");
+    }
+  }, [isEditing, currentTask]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!value.trim()) return; 
-
-    addTodo(value);
-    setValue(""); 
+    if (input.trim()) {
+      addTodo(input);
+      setInput("");
+    }
   };
 
   return (
-    <form className="TodoForm" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="TodoForm">
       <input
         type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
         className="todo-input"
-        value={value}
-        placeholder="Create a new task..."
-        onChange={(e) => setValue(e.target.value)}
+        placeholder={isEditing ? "Edit task..." : "Create a new task..."}
       />
-      <button type="submit" className="todo-btn">
-        Add Task
+      <button className="todo-btn" type="submit">
+        {isEditing ? "Update" : "Add"}
       </button>
     </form>
   );
@@ -30,4 +38,6 @@ export const TodoForm = ({ addTodo }) => {
 
 TodoForm.propTypes = {
   addTodo: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  currentTask: PropTypes.string,
 };
